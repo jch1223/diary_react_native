@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ListScreen from "./screens/ListScreen";
 import BookmarkScreen from "./screens/BookmarkScreen";
 import EditScreen from "./screens/EditScreen";
+import ViewScreen from "./screens/ViewScreen";
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -55,7 +56,8 @@ const TabNavigator = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
   {
     Tab: TabNavigator,
-    Edit: EditScreen
+    Edit: EditScreen,
+    View: ViewScreen
   },
   {
     initialRouteName: "Tab",

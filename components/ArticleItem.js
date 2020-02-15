@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
+import { withNavigation } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
 
-function ArticleItem({ article: { id, title, content, date } }) {
+function ArticleItem({ article: { id, title, content, date }, navigation }) {
   return (
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => {
+        navigation.navigate("View");
+      }}
+    >
       <View style={styles.container}>
         <View style={styles.icon}>
           <Ionicons name='md-list' size={14} color='#9e9e9e' />
@@ -62,4 +68,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ArticleItem;
+export default withNavigation(ArticleItem);
