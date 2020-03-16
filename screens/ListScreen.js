@@ -15,6 +15,7 @@ const ListScreen = () => {
           content: "첫번째 내용",
           date: "2020년 2월 14일"
         }}
+        remove={() => {}}
       />
       <ArticleItem
         article={{

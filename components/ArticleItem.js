@@ -1,29 +1,33 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 import { withNavigation } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
+import DeleteButton from "./DeleteButton";
 
-function ArticleItem({ article: { id, title, content, date }, navigation }) {
+function ArticleItem({ article: { id, title, content, date }, navigation, remove }) {
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => {
-        navigation.navigate("View");
-      }}
-    >
-      <View style={styles.container}>
-        <View style={styles.icon}>
-          <Ionicons name='md-list' size={14} color='#9e9e9e' />
+    <Swipeable renderRightActions={e => <DeleteButton onPress={remove} />}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          navigation.navigate("View");
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.icon}>
+            <Ionicons name='md-list' size={14} color='#9e9e9e' />
+          </View>
+          <View style={styles.info}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.content} numberOfLines={2}>
+              {content}
+            </Text>
+            <Text style={styles.date}>{date} </Text>
+          </View>
         </View>
-        <View style={styles.info}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.content} numberOfLines={2}>
-            {content}
-          </Text>
-          <Text style={styles.date}>{date} </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Swipeable>
   );
 }
 
@@ -31,7 +35,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: 16,
-    paddingBottom: 0
+    paddingBottom: 0,
+    backgroundColor: "#fff"
   },
   icon: {
     width: 16,
