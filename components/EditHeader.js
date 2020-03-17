@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
 
-function EditHeader({ navigation }) {
+function EditHeader({ navigation, done }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -15,7 +15,14 @@ function EditHeader({ navigation }) {
       >
         <Ionicons name='ios-arrow-back' size={28} color='#da5746' />
       </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.8} hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          done();
+          navigation.goBack();
+        }}
+        hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }}
+      >
         <Text style={styles.done}>완료</Text>
       </TouchableOpacity>
     </View>

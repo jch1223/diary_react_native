@@ -16,12 +16,31 @@ export default function App() {
       id: 2,
       title: "두번째 글",
       content: "두번째 내용",
-      date: "2020년 2월 14일"
+      date: "2020년 2월 14일",
+      bookmarked: false
     }
   ]);
+  const [id, setId] = useState(3);
 
   return (
-    <ContextProvider articles={articles}>
+    <ContextProvider
+      articles={articles}
+      create={(title, content) => {
+        const now = new Date();
+        setArticles(
+          [
+            {
+              id: id,
+              title: title,
+              content: content,
+              date: `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`,
+              bookmarked: false
+            }
+          ].concat(articles)
+        );
+        setId(id + 1);
+      }}
+    >
       <Navigator />
     </ContextProvider>
   );
