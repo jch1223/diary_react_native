@@ -2,12 +2,13 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { withNavigation } from "react-navigation";
+import { withContext } from "react-simplified-context";
 import { Ionicons } from "@expo/vector-icons";
 import DeleteButton from "./DeleteButton";
 
 function ArticleItem({ article: { id, title, content, date }, navigation, remove }) {
   return (
-    <Swipeable renderRightActions={e => <DeleteButton onPress={remove} />}>
+    <Swipeable renderRightActions={e => <DeleteButton id={id} remove={remove} />}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
@@ -73,4 +74,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(ArticleItem);
+export default withNavigation(withContext(ArticleItem));

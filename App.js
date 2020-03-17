@@ -1,26 +1,30 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, AsyncStorage } from "react-native";
 import { ContextProvider } from "react-simplified-context";
 import Navigator from "./Navigator";
 
 export default function App() {
-  const [articles, setArticles] = useState([
-    {
-      id: 1,
-      title: "첫번째 글",
-      content: "첫번째 내용",
-      date: "2020년 2월 14일",
-      bookmarked: true
-    },
-    {
-      id: 2,
-      title: "두번째 글",
-      content: "두번째 내용",
-      date: "2020년 2월 14일",
-      bookmarked: false
-    }
-  ]);
-  const [id, setId] = useState(3);
+  const [articles, setArticles] = useState([]);
+  const [id, setId] = useState(0);
+
+  const save = () => {
+    AsyncStorage.setItem("@diary:state", JSON.stringify(articles));
+    AsyncStorage.setItem("@diary:id", String(id));
+  };
+
+  useEffect(() => {
+    AsyncStorage.getItem("@diary:state").then(state => {
+      setArticles(JSON.parse(state));
+    });
+
+    AsyncStorage.getItem("@diary:id").then(id => {
+      setId(Number(id));
+    });
+  }, []);
+
+  useEffect(() => {
+    save();
+  }, [articles, id]);
 
   return (
     <ContextProvider
@@ -57,6 +61,15 @@ export default function App() {
         newArticles[index].bookmarked = !newArticles[index].bookmarked;
 
         setArticles(newArticles);
+      }}
+      remove={id => {
+        const newArticles = [...articles];
+
+        setArticles(
+          newArticles.filter(article => {
+            return article.id !== id;
+          })
+        );
       }}
     >
       <Navigator />
