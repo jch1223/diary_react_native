@@ -1,19 +1,23 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-navigation";
+import { withContext } from "react-simplified-context";
 import Header from "../components/Header";
 import ArticleItem from "../components/ArticleItem";
 
-const BookmarkScreen = () => {
+const BookmarkScreen = ({ articles }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header title='즐겨찾기' />
-      <ArticleItem
-        article={{
-          id: 1,
-          title: "첫번째 글",
-          content: "첫번째 내용",
-          date: "2020년 2월 14일"
+      <FlatList
+        data={articles.filter(article => {
+          return article.bookmarked;
+        })}
+        renderItem={({ item }) => {
+          return <ArticleItem article={item} />;
+        }}
+        keyExtractor={item => {
+          return `${item.id}`;
         }}
       />
     </SafeAreaView>
@@ -22,8 +26,9 @@ const BookmarkScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#fff"
   }
 });
 
-export default BookmarkScreen;
+export default withContext(BookmarkScreen);
