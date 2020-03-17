@@ -49,6 +49,15 @@ export default function App() {
         newArticles[index].content = content;
         setArticles(newArticles);
       }}
+      toggle={id => {
+        const newArticles = [...articles];
+        const index = newArticles.findIndex(item => {
+          return item.id === id;
+        });
+        newArticles[index].bookmarked = !newArticles[index].bookmarked;
+
+        setArticles(newArticles);
+      }}
     >
       <Navigator />
     </ContextProvider>

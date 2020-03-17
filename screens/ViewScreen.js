@@ -4,7 +4,7 @@ import { SafeAreaView, withNavigation } from "react-navigation";
 import { withContext } from "react-simplified-context";
 import ViewHeader from "../components/ViewHeader";
 
-function ViewScreen({ navigation, articles }) {
+function ViewScreen({ navigation, articles, toggle }) {
   const id = navigation.getParam("id", -1);
   const article = articles.find(item => {
     return item.id === id;
@@ -12,7 +12,13 @@ function ViewScreen({ navigation, articles }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ViewHeader title={article.title} />
+      <ViewHeader
+        title={article.title}
+        bookmarked={article.bookmarked}
+        bookmark={() => {
+          toggle(id);
+        }}
+      />
       <ScrollView>
         <TouchableOpacity
           activeOpacity={0.8}
