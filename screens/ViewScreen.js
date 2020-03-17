@@ -36,7 +36,8 @@ function ViewScreen({ navigation, articles, toggle }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#fff"
   },
   content: {
     padding: 20,

@@ -1,11 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import { ContextProvider } from "react-simplified-context";
 import Navigator from "./Navigator";
 
 export default function App() {
-  const [articles, setArticles] = useState([]);
-  const [id, setId] = useState(0);
+  const [articles, setArticles] = useState([
+    {
+      id: 1,
+      title: "사용 방법",
+      content: `1. 글 쓰기
+  하단의 + 버튼을 누르면 글을 작성 할 수 있습니다
+
+2. 삭제하기
+  목록에서 글 리스트를 왼쪽으로 밀면 삭제 버튼이 나타납니다
+
+3. 수정하기
+  본문을 길게 누르면 글을 수정 할 수 있습니다
+
+4. 즐겨찾기
+  우측 상단에 하트 아이콘을 누르면 즐겨찾기에 추가 됩니다
+`,
+      date: "2020년 3월 17일",
+      bookmarked: true
+    }
+  ]);
+  const [id, setId] = useState(2);
 
   const save = () => {
     AsyncStorage.setItem("@diary:state", JSON.stringify(articles));
@@ -13,6 +32,8 @@ export default function App() {
   };
 
   useEffect(() => {
+    save();
+
     AsyncStorage.getItem("@diary:state").then(state => {
       setArticles(JSON.parse(state));
     });
@@ -76,12 +97,3 @@ export default function App() {
     </ContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
