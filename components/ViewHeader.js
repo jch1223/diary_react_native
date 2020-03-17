@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
 
-function ViewHeader({ navigation }) {
+function ViewHeader({ navigation, title }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -15,7 +15,7 @@ function ViewHeader({ navigation }) {
       >
         <Ionicons name='ios-arrow-back' size={28} color='#da5746' />
       </TouchableOpacity>
-      <Text style={styles.title}>제목 영역</Text>
+      <Text style={styles.title}>{title}</Text>
       <TouchableOpacity activeOpacity={0.8} hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }}>
         <Ionicons name={"md-heart-empty"} size={24} color='#da5746' />
       </TouchableOpacity>

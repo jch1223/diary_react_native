@@ -1,12 +1,18 @@
 import React from "react";
 import { Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView, withNavigation } from "react-navigation";
+import { withContext } from "react-simplified-context";
 import ViewHeader from "../components/ViewHeader";
 
-function ViewScreen({ navigation }) {
+function ViewScreen({ navigation, articles }) {
+  const id = navigation.getParam("id", -1);
+  const article = articles.find(item => {
+    return item.id === id;
+  });
+
   return (
     <SafeAreaView style={styles.container}>
-      <ViewHeader />
+      <ViewHeader title={article.title} />
       <ScrollView>
         <TouchableOpacity
           activeOpacity={0.8}
@@ -14,8 +20,8 @@ function ViewScreen({ navigation }) {
             navigation.navigate("Edit");
           }}
         >
-          <Text style={styles.content}>글 내용</Text>
-          <Text style={styles.date}>2020년 02월 15일</Text>
+          <Text style={styles.content}>{article.content}</Text>
+          <Text style={styles.date}>{article.date}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -40,4 +46,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(ViewScreen);
+export default withNavigation(withContext(ViewScreen));

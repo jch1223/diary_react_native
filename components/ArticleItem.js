@@ -11,7 +11,7 @@ function ArticleItem({ article: { id, title, content, date }, navigation, remove
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
-          navigation.navigate("View");
+          navigation.navigate("View", { id: id });
         }}
       >
         <View style={styles.container}>
