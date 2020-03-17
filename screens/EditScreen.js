@@ -1,18 +1,28 @@
 import React from "react";
 import { TextInput, View, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-navigation";
+import { SafeAreaView, withNavigation } from "react-navigation";
 import { withContext } from "react-simplified-context";
 import EditHeader from "../components/EditHeader";
+import { Updates } from "expo";
 
-const EditScreen = ({ create }) => {
-  let title = "";
-  let content = "";
+const EditScreen = ({ create, update, articles, navigation }) => {
+  const id = navigation.getParam("id", -1);
+  const article = articles.find(item => {
+    return item.id === id;
+  });
+
+  let title = article ? article.title : "";
+  let content = article ? article.content : "";
 
   return (
     <SafeAreaView style={styles.container}>
       <EditHeader
         done={() => {
-          create(title, content);
+          if (id > -1) {
+            update(id, title, content);
+          } else {
+            create(title, content);
+          }
         }}
       />
       <View style={styles.body}>
@@ -22,7 +32,9 @@ const EditScreen = ({ create }) => {
           onChangeText={text => {
             title = text;
           }}
-        />
+        >
+          {title}
+        </TextInput>
         <View style={styles.divider} />
         <TextInput
           placeholder='이곳을 눌러 작성을 시작하세요'
@@ -31,7 +43,9 @@ const EditScreen = ({ create }) => {
             content = text;
           }}
           style={styles.content}
-        />
+        >
+          {content}
+        </TextInput>
       </View>
     </SafeAreaView>
   );
@@ -68,4 +82,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withContext(EditScreen);
+export default withNavigation(withContext(EditScreen));

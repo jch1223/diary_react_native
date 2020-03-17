@@ -40,6 +40,15 @@ export default function App() {
         );
         setId(id + 1);
       }}
+      update={(id, title, content) => {
+        const newArticles = [...articles];
+        const index = newArticles.findIndex(item => {
+          return item.id === id;
+        });
+        newArticles[index].title = title;
+        newArticles[index].content = content;
+        setArticles(newArticles);
+      }}
     >
       <Navigator />
     </ContextProvider>
